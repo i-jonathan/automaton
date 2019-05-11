@@ -1,9 +1,9 @@
 from selenium import webdriver
 import pandas as pd
 
-options = webdriver.ChromeOptions()
-options.add_extension('integration.crx')
-driver = webdriver.Chrome(chrome_options=options)
+option = webdriver.ChromeOptions()
+option.add_extension('integration.crx')
+driver = webdriver.Chrome(options=option)
 df = pd.read_csv('getcomics.csv', index_col='Index')
 
 try:
@@ -31,8 +31,7 @@ try:
                         str(df.Title[i]) + ' ' + str(df.Issue[i]) + ' with year ' + str(df.Year[i]) + ' doesn\'t exist')
                     df.Year[i] += 1
                     link = 'https://getcomics.info/' + str(df.Category[i]) + '/' + title + '-' + str(
-                        df.Issue[i]) + '-' + \
-                           str(df.Year[i]) + '/'
+                        df.Issue[i]) + '-' + str(df.Year[i]) + '/'
 
                 else:
                     driver.find_element_by_link_text('Download Now').click()
@@ -42,10 +41,7 @@ try:
                     df.Issue[i] += 1
                     error = 0
                     link = 'https://getcomics.info/' + str(df.Category[i]) + '/' + title + '-' + str(
-                        df.Issue[i]) + '-' + \
-                           str(df.Year[i]) + '/'
-except:
-    pass
+                        df.Issue[i]) + '-' + str(df.Year[i]) + '/'
 
 finally:
     driver.quit()
